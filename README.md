@@ -20,6 +20,6 @@ pyinstaller -F app.py
 
 pyinstaller -F app.py
 
-Проект расположенный в директории part_3 после компиляции требует датасеты data_multivar_reqr.txt и data_singlevar_regr.txt, их необходимо перенести в директорию с скомпилированным проектом - ./dist.
+Проект расположенный в директории part_3 после компиляции требует датасеты data_multivar_reqr.txt, data_singlevar_regr.txt, data_decision_trees.txt, data_random_forests.txt, их необходимо перенести в директорию с скомпилированным проектом - ./dist.
 
 Так как part_2 использует консоль, запускать приложение необходимо из консоли.
