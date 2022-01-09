@@ -26,7 +26,7 @@ class Part_2:
     NaiveBaysClassifieParams(self.root)
 
   def linearSVC(self):
-    LinearSVCClassifier(self.root)
+    LinearSVCClassifier()
 
 if __name__ == "__main__":
   part_2 = Part_2()

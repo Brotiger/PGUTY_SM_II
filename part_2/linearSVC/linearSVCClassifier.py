@@ -7,7 +7,7 @@ from sklearn.multiclass import OneVsOneClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 class LinearSVCClassifier:
-  def __init__(self, parent):
+  def __init__(self):
     self.linearSVCClassifier()
 
   def linearSVCClassifier(self):
