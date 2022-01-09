@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split, cross_val_score
 from linearRegression import LinearRegression
+from multilinearRegression import MultiLinearRegression
 
 class Part_3:
   def __init__(self):
@@ -19,12 +20,15 @@ class Part_3:
 
   def draw_widgets(self):
     tk.Button(self.root, text="Классификатор на основе линейного регрессионного алгоритма", width=70, command=self.linearRegression).pack()
-    tk.Button(self.root, text="Классификатор на основе многомерного регрессионного алгоритма", width=70).pack()
+    tk.Button(self.root, text="Классификатор на основе многомерного регрессионного алгоритма", width=70, command=self.multiLinearRegression).pack()
     tk.Button(self.root, text="Классификатор на основе дерева решений", width=70).pack()
     tk.Button(self.root, text="Классификаторы на основе случайного леса и предельно случайного леса", width=70).pack()
 
   def linearRegression(self):
     LinearRegression()
+
+  def multiLinearRegression(self):
+    MultiLinearRegression()
 
 if __name__ == "__main__":
   part_3 = Part_3()

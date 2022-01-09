@@ -12,6 +12,9 @@ class LinearRegression:
     input_file = 'data_singlevar_regr.txt'
 
     data = np.loadtxt(input_file, delimiter=',')
+    print('Датасет:')
+    print(data)
+
     X, y = data[:, :-1], data[:, -1]
 
     num_training = int(0.90 * len(X))
