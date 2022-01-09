@@ -7,70 +7,81 @@ from sklearn.multiclass import OneVsOneClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 class LinearSVCClassifier:
-  def __init__(self, parent, path):
-    self.root = tk.Toplevel(parent)
-    self.root.title('Обучение с учителем')
-    self.root.resizable(False, False)
+  def __init__(self, parent):
+    self.linearSVCClassifier()
 
-    self.linearSVCClassifier(path)
+  def linearSVCClassifier(self):
+    input_file = 'income_data.txt'
 
-    #self.draw_widgets()
-
-  def draw_widgets(self):
-    #Процент попадания при класификации
-    tk.Label(self.root, text=f"Accurancy: {self.accuracy}%").pack()
-    tk.Label(self.root, text=f"Precision: {self.precision}%").pack()
-    #Сколько удалось класифицировать
-    tk.Label(self.root, text=f"Recall: {self.recall}%").pack()
-    tk.Label(self.root, text=f"F1: {self.f1}%").pack()
-    tk.Button(self.root, text="Построить график", command=self.draw_graphic).pack()
-
-  def linearSVCClassifier(self, path):
     X = []
     y = []
-
     count_class1 = 0
     count_class2 = 0
-
     max_datapoints = 25000
 
-    path = 'dataset/income_data.txt'
-    with open(path, 'r') as f:
+    with open(input_file, 'r') as f:
       for line in f.readlines():
         if count_class1 >= max_datapoints and count_class2 >= max_datapoints:
           break
         if '?' in line:
           continue
-        
-        #Удаляем перенос строки
-        data = line.split(',')
-        if data[-1].strip() == '<=50K' and count_class1 < max_datapoints:
+
+        data = line[:-1].split(', ')
+
+        if data[-1] == '<=50K' and count_class1 < max_datapoints:
           X.append(data)
           count_class1 += 1
-
-        if data[-1].strip() == '>50К' and count_class2 < max_datapoints:
+        if data[-1] == '>50K' and count_class2 < max_datapoints:
           X.append(data)
           count_class2 += 1
 
-    #Преобразование обычного масива в массив numpy для того что бы была возможность применять функции numpy к данному массиву
     X = np.array(X)
 
-    #Преобразование строковых данных в числовые
-    #Создаем новый масив размерностью масива X
-    X_encoded = np.empty(X.shape)
+    print('Датасет:')
+    print(X)
 
     label_encoder = []
-    #Перебираем элементы первой строки, если элемент целочисленный то все элементы в матрицы следующие под номером столбца i являются целочисленными
-    #Копируем их, если не целочисленный то во всех строках элемент в столбце под номером i кодируем
+    X_encoded = np.empty(X.shape)
+
     for i,item in enumerate(X[0]):
       if item.isdigit():
         X_encoded[:, i] = X[:, i]
       else:
-        #Для каждого строкого элемента создается свой LabelEncoder который далее кодирует текстовый элемент и возвращает его закодированное представление
         label_encoder.append(preprocessing.LabelEncoder())
         X_encoded[:, i] = label_encoder[-1].fit_transform(X[:, i])
 
-    #Приводим к целочисленному значению все кроме результата
     X = X_encoded[:, :-1].astype(int)
-    #Приводим к целочисленному значению результат
     y = X_encoded[:, -1].astype(int)
+
+    classifier = OneVsOneClassifier(LinearSVC(random_state=0))
+    classifier.fit(X, y)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=5)
+    classifier = OneVsOneClassifier(LinearSVC(random_state=0))
+    classifier.fit(X_train, y_train)
+    y_test_pred = classifier.predict(X_test)
+
+    f1 = cross_val_score(classifier, X, y, scoring='f1_weighted', cv=3)
+    print("F1 score: " + str(round(100*f1.mean(), 2)) + "%")
+
+    input_data = ['37', 'Private', '215646', 'HS-grad', '9', 'Never-married', 'Handlers-cleaners', 'Not-in-family', 'White', 'Male', '0', '0', '40', 'United-States']
+
+    print('Данные для классификации:')
+    print(input_data)
+
+    input_data_encoded = [-1] * len(input_data)
+    count = 0
+
+    for i, item in enumerate(input_data):
+      if item.isdigit():
+        input_data_encoded[i] = int(input_data[i])
+      else:
+        input_data_encoded[i] = int(label_encoder[count].transform([input_data[i]]))
+        count += 1
+        
+    input_data_encoded = np.array([input_data_encoded])
+
+    predicted_class = classifier.predict(input_data_encoded)
+    print('Результат классификации:')
+    print(label_encoder[-1].inverse_transform(predicted_class)[0])
+    print('------------------------')

@@ -16,7 +16,6 @@ class NaiveBaysClassifieParams:
     self.root.resizable(False, False)
 
     self.train = tk.DoubleVar()
-    self.path = tk.StringVar()
     self.train.set(0.5)
 
     self.draw_widgets()
@@ -27,8 +26,6 @@ class NaiveBaysClassifieParams:
     self.root.wait_window()
 
   def draw_widgets(self):
-    tk.Label(self.root, text="Абсолютный путь до файла с датасетом").pack()
-    tk.Entry(self.root, textvariable=self.path).pack()
     tk.Label(self.root, text="Процент данных для обучения").pack()
     tk.Entry(self.root, textvariable=self.train).pack()
 
@@ -37,11 +34,9 @@ class NaiveBaysClassifieParams:
 
   def get_entry(self):
     train = self.train.get()
-    path = self.path.get()
-
-    if train and train < 1.0 and path:
-      NaiveBaysClassifie(self.root, train, path)
+    
+    if train and train < 1.0:
+      NaiveBaysClassifie(self.root, train)
 
   def delete_entry(self):
     self.train.set(0.5)
-    self.path.set('')

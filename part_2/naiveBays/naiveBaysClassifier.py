@@ -7,14 +7,15 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split, cross_val_score
 
 from services.utilities import visualize_classifier
+import os
 
 class NaiveBaysClassifie:
-  def __init__(self, parent, train, path):
+  def __init__(self, parent, train):
     self.root = tk.Toplevel(parent)
     self.root.title('Обучение с учителем')
     self.root.resizable(False, False)
 
-    self.naiveBaysClassifier(train, path)
+    self.naiveBaysClassifier(train)
     self.draw_widgets()
 
   def grab_focus(self):
@@ -31,8 +32,12 @@ class NaiveBaysClassifie:
     tk.Label(self.root, text=f"F1: {self.f1}%").pack()
     tk.Button(self.root, text="Построить график", command=self.draw_graphic).pack()
 
-  def naiveBaysClassifier(self, train, path):
+  def naiveBaysClassifier(self, train):
+    path = 'data_multivar_nb.txt'
     data = np.loadtxt(path, delimiter=',')
+    print('Датасет:')
+    print(data)
+    print('------------------------')
 
     # 1) : - с какой по какую строку - в нашем случае с первой до последней, 2) : - с какой по какой столбец
     X, y = data[:, :-1], data[:, -1]

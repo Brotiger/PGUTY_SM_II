@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split, cross_val_score
 from naiveBays.naiveBaysClassifierParams import NaiveBaysClassifieParams
-from linearSVC.linearSVCClassifierParams import LinearSVCClassifierParams
+from linearSVC.linearSVCClassifier import LinearSVCClassifier
 
 class Part_2:
   def __init__(self):
@@ -26,7 +26,7 @@ class Part_2:
     NaiveBaysClassifieParams(self.root)
 
   def linearSVC(self):
-    LinearSVCClassifierParams(self.root)
+    LinearSVCClassifier(self.root)
 
 if __name__ == "__main__":
   part_2 = Part_2()
