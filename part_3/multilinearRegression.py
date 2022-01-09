@@ -8,6 +8,7 @@ class MultiLinearRegression:
     self.multiLinearRegression()
 
   def multiLinearRegression(self):
+    print('Multinear regression\n')
     input_file = 'data_multivar_regr.txt'
 
     data = np.loadtxt(input_file, delimiter=',')

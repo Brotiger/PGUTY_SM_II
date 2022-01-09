@@ -10,6 +10,7 @@ class DecisionTree:
     self.decisionTree()
 
   def decisionTree(self):
+    print('Decision trees\n')
     input_file = 'data_decision_trees.txt'
     data = np.loadtxt(input_file, delimiter=',')
 
@@ -46,6 +47,6 @@ class DecisionTree:
     print(classification_report(y_test, y_test_pred, target_names=class_names))
     print("#"*40 + "\n")
     print('------------------------')
-    plt.show()
-    visualize_classifier(classifier, X_train, y_train, 'Training dataset')
-    visualize_classifier(classifier, X_test, y_test, 'Test dataset')
+    #plt.show()
+    #visualize_classifier(classifier, X_train, y_train, 'Training dataset')
+    #visualize_classifier(classifier, X_test, y_test, 'Test dataset')

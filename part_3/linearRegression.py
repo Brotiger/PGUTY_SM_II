@@ -9,6 +9,7 @@ class LinearRegression:
     self.linearRegression()
 
   def linearRegression(self):
+    print('Linear regression\n')
     input_file = 'data_singlevar_regr.txt'
 
     data = np.loadtxt(input_file, delimiter=',')
